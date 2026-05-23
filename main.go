@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/ThanvirXo/jira-auto-bug-solver/classifier"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus/hooks/writer"
@@ -46,6 +47,8 @@ func init(){
 	}else{
 		logrus.Info("Starting in production mode")
 	}
+
+	classifier.Init()
 }
 
 

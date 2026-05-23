@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
+	"github.com/ThanvirXo/jira-auto-bug-solver/classifier"
 	"github.com/ThanvirXo/jira-auto-bug-solver/common"
 	"github.com/ThanvirXo/jira-auto-bug-solver/jira"
 	"github.com/ThanvirXo/jira-auto-bug-solver/writer"
@@ -29,6 +30,16 @@ func (s *Service) HealthCheck() common.ResponseType {
 func (s *Service) HandleWebhook(payload *jira.WebhookPayload) error {
 	if payload.Issue.Fields.IssueType.Name != "Bug" {
 		logrus.Infof("ignoring non-bug issue: %s", payload.Issue.Fields.IssueType.Name)
+		return nil
+	}
+
+	isFrontend, err := classifier.IsFrontend(payload.Issue.Fields.Summary, payload.Issue.Fields.Description.PlainText())
+	if err != nil {
+		logrus.Errorf("classification failed for %s: %v", payload.Issue.Key, err)
+		return err
+	}
+	if !isFrontend {
+		logrus.Infof("ignoring backend bug: %s", payload.Issue.Key)
 		return nil
 	}
 
