@@ -5,7 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/ThanvirXo/jira-auto-bug-solver/watcher"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus/hooks/writer"
@@ -51,8 +50,6 @@ func init(){
 
 
 func main(){
-	go watcher.Watch(os.Getenv("FRONTEND_BUGS_DIR"))
-
 	err:=NewApp().SetupMiddleware().SetupRoutes().Listen()
 	if err!=nil{
 		logrus.Fatalf("Error starting server: %v",err)
