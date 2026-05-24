@@ -41,8 +41,8 @@ func (a *App) SetupMiddleware() *App{
 }
 
 func (a *App) Listen() error {
-	logrus.Infof("Starting server on port %s", "8080")
-	return a.Router.Run(":8080")
+	logrus.Infof("Starting server on port %s", "8000")
+	return a.Router.Run(":8000")
 }
 
 func (a *App) SetupRoutes() *App{
