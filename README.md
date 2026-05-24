@@ -8,27 +8,29 @@ Automatically fixes frontend bugs filed in Jira. When a bug ticket is created, t
 Jira Bug Created
       │
       ▼
-POST /jira/webhook
+Webhook Receiver (Go)
       │
       ▼
-Classify with self-hosted LLM
+Self-Hosted LLM Classifier
       │
-      ├── backend → log & ignore
+      ├── backend → ignore
       │
       └── frontend
             │
             ▼
-      Write bug report as .md file
-      into FRONTEND_BUGS_DIR
+Generate bug.md
             │
             ▼
-      Trigger Claude Code CLI
-      against FRONTEND_REPO_PATH
+Create Isolated Git Worktree
             │
             ▼
-      Claude reads the bug file,
-      finds the root cause,
-      and stages a fix
+Claude Code Agent
+            │
+            ▼
+Generate + Stage Patch
+            │
+            ▼
+Human Review & Merge
 ```
 
 Claude Code does not commit or push — it only stages the changes. You review and merge manually.
